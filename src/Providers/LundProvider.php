@@ -9,14 +9,6 @@ if(file_exists(dirname(dirname(__DIR__)).'/vendor/autoload.php'))
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
-// use Illuminate\Database\Eloquent\Relations\Relation;
-
-
-// use View;
-// use User;
-// use Cache;
-// use Illuminate\Http\Request;
-// use DB;
 
 class LundProvider extends ServiceProvider
 {
@@ -26,23 +18,13 @@ class LundProvider extends ServiceProvider
      */
     public function boot()
     {
-// 		parent::boot();
 	    
-/*
-	    if ($this->app->runningInConsole()) {
-	        $this->commands([
-	            Install::class,
-	        ]);
-	    }	       	    
-*/
 	    $this->loadRoutesFrom(dirname(__DIR__).'/routes.php');
-    
-// 	    $this->loadViewsFrom(dirname(__DIR__).'/resources/views', 'pub');
-        
+            
 	    $this->loadMigrationsFrom(dirname(__DIR__).'/database/migrations');        
         
 	    $this->publishes([
-	        dirname(__DIR__).'/config/pub.php' => config_path('pub.php'),
+	        dirname(__DIR__).'/config/lund.php' => config_path('lund.php'),
 	    ], 'config');   
 
     }
@@ -58,11 +40,6 @@ class LundProvider extends ServiceProvider
     {
 	    
 	    $this->mergeConfigFrom(dirname(__DIR__).'/config/lund.php', 'lund');        	    
-	    
         
-		//$loader = \Illuminate\Foundation\AliasLoader::getInstance();
-// 	    $loader->alias('Socialite', \Laravel\Socialite\Facades\Socialite::class);		
-	    
-	    
     }
 }
