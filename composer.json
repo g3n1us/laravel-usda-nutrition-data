@@ -1,0 +1,25 @@
+{
+    "name": "g3n1us/laravel-usda-nutrition-data",
+    "description": "Laravel-Powered data visualization of nutrition information provided by the USDA",
+    "type": "php",
+    "authors": [
+        {
+            "name": "Sean Bethel",
+            "email": "sean@americanmadeweb.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "laravel/socialite": "^3.0",
+        "laravel/scout": "^3.0",
+        "league/flysystem-ziparchive": "^1.0"        
+    },
+    "autoload": {
+        "psr-4": {
+            "G3n1us\\Lund\\": "src/"
+        },	    
+		"files": [
+			"src/helpers.php"
+		] 
+    }
+}
