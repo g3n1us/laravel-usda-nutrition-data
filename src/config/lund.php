@@ -1,4 +1,17 @@
 <?php
+
+#
+#
+# G3N1US - Laravel USDA Nutrition Data
+#
+# (c) Sean Bethel
+# http://bewarerobots.com
+#
+# For the full license information, view the LICENSE file that was distributed
+# with this source code.
+#
+#
+	
 	return [
 		'usda_endpoint' => 'https://www.ars.usda.gov/ARSUserFiles/80400525/Data/SR/SR28/dnload/sr28asc.zip',
 		'table_keys'    => [

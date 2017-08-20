@@ -1,4 +1,17 @@
 <?php
+	
+#
+#
+# G3N1US - Laravel USDA Nutrition Data
+#
+# (c) Sean Bethel
+# http://bewarerobots.com
+#
+# For the full license information, view the LICENSE file that was distributed
+# with this source code.
+#
+#
+
 namespace G3n1us\Lund\Controllers;	
 	
 use Illuminate\Http\Request;	
@@ -25,7 +38,10 @@ class ApiController extends BaseController{
 	}
 	
 	public function search(){
-		return $this->get_search_results($this->search)->take(50);
+		if(empty($this->search))
+			throw new \Exception('Search term cannot be empty');
+			
+		return $this->get_search_results($this->search)->take(250);
 	}
 	
 	private function get_search_results($query = null){
@@ -37,18 +53,19 @@ class ApiController extends BaseController{
 			$lev = levenshtein($v, $search);
 			if(str_contains($v, $search))
 				$lev = $lev - 100;
-			if(starts_with($v, $search))
-				$lev = $lev - 100;
+			if(str_is("$search,*", $v))
+				$lev = $lev - 500;
+			if(str_is("*$search,*", $v))
+				$lev = $lev - 200;
+			if(str_is("* $search,*", $v))
+				$lev = $lev - 200;
+				
 			return $lev;
 		});
 	}
 	
 	public function get(Request $request, $id = '01001'){
-		if($this->search){
-			dd($this->get_search_results());
-		}
-		
-		return response($this->model::with($this->eager_load)->find($id))
+		return response($this->model::with($this->eager_load)->findOrFail($id))
 			->header('Access-Control-Allow-Origin', '*')
 			->header('Cache-Control', 'max-age=3600');
 	}

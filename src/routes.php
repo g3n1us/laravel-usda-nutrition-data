@@ -1,4 +1,16 @@
 <?php
+
+#
+#
+# G3N1US - Laravel USDA Nutrition Data
+#
+# (c) Sean Bethel
+# http://bewarerobots.com
+#
+# For the full license information, view the LICENSE file that was distributed
+# with this source code.
+#
+#
 	
 use League\Flysystem\Filesystem;
 use League\Flysystem\ZipArchive\ZipArchiveAdapter;
@@ -6,23 +18,37 @@ use G3n1us\Lund\Models\Food;
 use G3n1us\Lund\Models\FoodData;
 use G3n1us\Lund\Controllers\ApiController;
 
-Route::get('/get/{id?}', 'G3n1us\Lund\Controllers\ApiController@get');
+Route::get('/get/{food?}', 'G3n1us\Lund\Controllers\ApiController@get');
 	
 Route::get('/lookup', 'G3n1us\Lund\Controllers\ApiController@lookup');
 	
 Route::get('/search', 'G3n1us\Lund\Controllers\ApiController@search');
 	
-/*
-Route::get('/api/{id?}', function(Request $request, $id = null){
-	$id = $id ?: '01001';
-	// API parameters
-	$abbreviated = $request->input('abbreviated', false);
-	dd($abbreviated);
-	return response(Food::with(['data', 'data.nutrient'])->find($id))
-		->header('Access-Control-Allow-Origin', '*')
-		->header('Cache-Control', 'max-age=3600');
+Route::get('/', function(Request $request){
+	$Parsedown = new Parsedown();
+	$md = file_get_contents(dirname(__DIR__).'/README.md');
+	$output = '<!DOCTYPE html>   
+	<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>G3N1US - USDA Nutrition Data</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+	</head>
+	<body>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">'
+						.$Parsedown->text($md).
+					'</div>
+				</div>
+			</div>
+		</section>	
+	</body>
+	</html>';
+	return response($output)->header('Cache-Control', 'max-age=3600');
 });	
-*/
 	
 	
 	
